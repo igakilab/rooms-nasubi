@@ -27,7 +27,7 @@ function setup() {
   background(back);
   noStroke();
   rectbox();
-  var url = "http://localhost:3000/api";
+  var url = "http://localhost:3000/api/latest";
 	var request = new XMLHttpRequest();
 	request.open('GET', url);
 	request.onreadystatechange = function () {
@@ -38,38 +38,42 @@ function setup() {
   	    } else {
     	    // 取得成功
     	    reply = JSON.parse(request.responseText);
-    	    tmp = reply[0];
-    	    console.log(tmp);
-          kitaba.setTarget({x:tmp["x座標"]*120+28,y:tmp["y座標"]*120+1025+50});
-          console.log({x:tmp["x座標"]*120+28,y:tmp["y座標"]*120+1025+50});
-   	 }
+    	    for(var i=0;i<reply.length;i++){
+    	      tmp = reply[i];
+    	      console.log(tmp);
+    	      if(tmp.minor==101){
+              kitaba.setTarget({x:tmp.x*120+28,y:tmp.y*120+1025});
+    	      }else if(tmp.minor==102){
+    	        koike.setTarget({x:tmp.x*120+28,y:tmp.y*120+1025});
+    	      }else if(tmp.minor==103){
+    	        yamagida.setTarget({x:tmp.x*120+28,y:tmp.y*120+1025});
+    	      }
+    	    }
+   	 }    
 	};
-	koike.setTarget({x:200,y:800});
-	yamagida.setTarget({x:180,y:1000});
-    console.log(kitaba.x + "," +  kitaba.y);
 request.send(null);
 }
 
 function draw() {
   background(back);
   if(tmp){
-    text("(" + tmp["x座標"] + "," + tmp["y座標"], 20, 30);
-    ellipse(tmp["x座標"]*120+28,tmp["y座標"]*120+1025+50,10,10);
+    text("(" + tmp.x + "," + tmp.y, 20, 30);
+    ellipse(tmp.x*120+28,tmp.y*120+1025+50,10,10);
     kitaba.step(3);
+    koike.step(3);
+    yamagida.step(3);
   }
-  koike.step(3);
-  yamagida.step(3);
   kitaba.draw();
   koike.draw();
   yamagida.draw();
 }
 
 function rectbox() {
-  r1 = {x:18,y:0,width:385,height:1228};
-  r2 = {x:403,y:0,width:321,height:1228};
-  r3 = {x:18,y:86,width:96,height:1142};
-  r4 = {x:307,y:152,width:96,height:1076};
+  r1 = {x:0,y:0,width:403,height:1240};
+  r2 = {x:403,y:0,width:340,height:1240};
+  r3 = {x:0,y:86,width:114,height:1150};
+  r4 = {x:307,y:152,width:114,height:1076};
   r5 = {x:242,y:87,width:161,height:64};
   r6 = {x:114,y:1161,width:289,height:67};
-  r7 = {x:724,y:17,width:63,height:1113};
+  r7 = {x:724,y:0,width:90,height:1150};
 }
