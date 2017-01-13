@@ -8,6 +8,7 @@ var dest;
 var r1,r2,r3,r4,r5;
 var reply = "";
 var tmp;
+var pt = null;
 
 function preload(){
     back = loadImage("zemimap2016.png");
@@ -42,11 +43,14 @@ function setup() {
     	      tmp = reply[i];
     	      console.log(tmp);
     	      if(tmp.minor==101){
-              kitaba.setTarget({x:tmp.x*120+28,y:tmp.y*120+1025});
+              kitaba.setTarget({x:tmp.x,y:tmp.y});
+              console.log("(x" + ("(x" + tmp.x + ",y:" + tmp.y + ")");
     	      }else if(tmp.minor==102){
-    	        koike.setTarget({x:tmp.x*120+28,y:tmp.y*120+1025});
+    	        koike.setTarget({x:tmp.x,y:tmp.y});
+    	        console.log("(x" + tmp.x + ",y:" + tmp.y + ")");
     	      }else if(tmp.minor==103){
-    	        yamagida.setTarget({x:tmp.x*120+28,y:tmp.y*120+1025});
+    	        yamagida.setTarget({x:tmp.x,y:tmp.y});
+    	        console.log("(x" + tmp.x + ",y:" + tmp.y + ")");
     	      }
     	    }
    	 }    
@@ -56,9 +60,14 @@ request.send(null);
 
 function draw() {
   background(back);
+  
+  if( pt ){
+    text("mouse (" + pt.x + ", " + pt.y + ")", 20, 50);
+    text("mouse (" + pt.x + ", " + pt.y + ")", 20, 1000);
+  }
+  
   if(tmp){
-    text("(" + tmp.x + "," + tmp.y, 20, 30);
-    ellipse(tmp.x*120+28,tmp.y*120+1025+50,10,10);
+    text("(x" + tmp.x + ",y:" + tmp.y + ")", 20, 30);
     kitaba.step(3);
     koike.step(3);
     yamagida.step(3);
@@ -76,4 +85,8 @@ function rectbox() {
   r5 = {x:242,y:87,width:161,height:64};
   r6 = {x:114,y:1161,width:289,height:67};
   r7 = {x:724,y:0,width:90,height:1150};
+}
+
+function mouseMoved(){
+  pt = {x:mouseX, y:mouseY};
 }
