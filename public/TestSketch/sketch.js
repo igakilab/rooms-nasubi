@@ -43,14 +43,14 @@ function setup() {
     	      tmp = reply[i];
     	      console.log(tmp);
     	      if(tmp.minor==101){
-              kitaba.setTarget({x:tmp.x,y:tmp.y});
-              console.log("(x" + ("(x" + tmp.x + ",y:" + tmp.y + ")");
+    	        tmp = replacePx(tmp);
+              kitaba.setTarget(tmp);
     	      }else if(tmp.minor==102){
-    	        koike.setTarget({x:tmp.x,y:tmp.y});
-    	        console.log("(x" + tmp.x + ",y:" + tmp.y + ")");
+    	        tmp = replacePx(tmp);
+    	        koike.setTarget(tmp);
     	      }else if(tmp.minor==103){
-    	        yamagida.setTarget({x:tmp.x,y:tmp.y});
-    	        console.log("(x" + tmp.x + ",y:" + tmp.y + ")");
+    	        tmp = replacePx(tmp);
+    	        yamagida.setTarget(tmp);
     	      }
     	    }
    	 }    
@@ -89,4 +89,9 @@ function rectbox() {
 
 function mouseMoved(){
   pt = {x:mouseX, y:mouseY};
+}
+
+function replacePx(a){
+  console.log("(x" + tmp.x + ",y:" + tmp.y + ")");
+  return {x:a.x*110, y:a.y*110};
 }
